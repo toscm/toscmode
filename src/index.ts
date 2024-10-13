@@ -64,6 +64,8 @@ function activate(
     restorer: ILayoutRestorer | null
 ) {
     console.log('JupyterLab extension toscmode is activated!')
+
+    // Random Astronomy Picture
     let widget: MainAreaWidget<APODWidget>
     const command: string = 'apod:open'
     app.commands.addCommand(command, {
@@ -85,11 +87,22 @@ function activate(
     palette.addItem({ command, category: 'Tutorial' }) // Add the command to the palette.
     let tracker = new WidgetTracker<MainAreaWidget<APODWidget>>({ namespace: 'apod' }) // Track and restore the widget state
     if (restorer) { restorer.restore(tracker, { command, name: () => 'apod'}) }
+
+    // Tobias Showcase Mode (Toscmode)
+    const showcaseCommand: string = 'showcase:toggle'
+    app.commands.addCommand(showcaseCommand, {
+        label: 'Toggle Showcase Mode',
+        execute: () => {
+            document.body.classList.toggle('showcase-mode')
+        }
+    })
+    palette.addItem({ command: showcaseCommand, category: 'View' }) // Add the command to the palette.
+
 }
 
 const plugin: JupyterFrontEndPlugin<void> = {
-    id: 'jupyterlab-apod',
-    description: 'Show a random NASA Astronomy Picture of the Day in a JupyterLab panel.',
+    id: 'toscmode',
+    description: 'Adds a Showcase Mode to Jupyter Lab',
     autoStart: true,
     requires: [ICommandPalette],
     optional: [ILayoutRestorer],
