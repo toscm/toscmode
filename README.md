@@ -3,7 +3,7 @@
 [![Github Actions Status](https://github.com/toscm/toscmode/workflows/Build/badge.svg)](https://github.com/toscm/toscmode/actions/workflows/build.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/toscm/toscmode/main?urlpath=lab)
 
-JupyterLab extension providing an additional command *Enable toscmode* that allows to switch between the normal mode and a very lightweight showcase mode developed for the lectures of Tobias Schmidt.
+jupyterlab_toscmode is a JupyterLab extension providing an additional command *Enable toscmode* that allows to switch between the normal mode and a very lightweight showcase mode developed for the lectures of Tobias Schmidt.
 
 In Toscmode, the following elements are hidden:
 
