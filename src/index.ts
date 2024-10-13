@@ -1,112 +1,105 @@
-import {
-    ILayoutRestorer,
-    JupyterFrontEnd,
-    JupyterFrontEndPlugin,
-} from '@jupyterlab/application'
+import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
+import { ICommandPalette } from '@jupyterlab/apputils';
+import { INotebookTracker } from '@jupyterlab/notebook';
+import { Cell, ICellModel } from '@jupyterlab/cells';
 
-import {
-    ICommandPalette,
-    MainAreaWidget,
-    WidgetTracker,
-} from '@jupyterlab/apputils'
+let showcaseModeEnabled = false;
+let cellChangeTracker: any = null;
 
-import { Widget } from '@lumino/widgets'
+function hideCellsOutsideCurrentChapter(tracker: INotebookTracker, cell: Cell<ICellModel> | null) {
+    // Iterate over all siblings cells (incl. the current cell) upwards until a
+    // header cell is found. For each of these cells, add class
+    // 'in-current-chapter' and store handles to them. After that, search for
+    // all cells with class 'in-current-chapter' and remove the class from the
+    // set difference.
+    let previousSibling = cell?.node.previousElementSibling as HTMLElement | null;
+    let headerFound = cell?.node.querySelector('h1, h2, h3, h4, h5, h6') ? true : false;
+    const nodesInChapterOld: Set<HTMLElement> = new Set(document.querySelectorAll('.in-current-chapter') as NodeListOf<HTMLElement>);
+    const nodesInChapterNow: Set<HTMLElement> = new Set();
 
-interface APODResponse {
-    copyright: string
-    date: string
-    explanation: string
-    media_type: 'video' | 'image'
-    title: string
-    url: string
-}
+    console.log("Current cell: ", cell?.node);
+    console.log("Previous sibling: ", previousSibling);
+    console.log("Header found: ", headerFound);
 
-class APODWidget extends Widget {
-    constructor() {
-        super()
-        this.addClass('my-apodWidget')
-        this.img = document.createElement('img')
-        this.node.appendChild(this.img)
-        this.summary = document.createElement('p')
-        this.node.appendChild(this.summary)
+    // If the current cell is a header, scroll so it's shown at the window top
+    // if (headerFound) {
+    //     console.log("Scrolling to header ", cell?.node);
+    //     const notebookArea = document.querySelector('.jp-NotebookPanel-notebook');
+    //     if (notebookArea && cell?.node) {
+    //         const boundingRect = cell.node.getBoundingClientRect();
+    //         const notebookAreaRect = notebookArea.getBoundingClientRect();
+    //         const ytop = boundingRect.top - notebookAreaRect.top;
+    //         notebookArea.scrollBy({ top: ytop, behavior: 'smooth' });
+    //     }
+    // }
+
+    // Always add the current node to the current chapter
+    if (cell?.node) {
+        console.log("Adding current node", cell?.node, " to current chapter");
+        cell?.node.classList.add('in-current-chapter');
+        nodesInChapterNow.add(cell?.node);
     }
-    readonly img: HTMLImageElement
-    readonly summary: HTMLParagraphElement
-    async updateAPODImage(): Promise<void> {
-        const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${this.randomDate()}`)
-        if (!response.ok) {
-            const data = await response.json()
-            this.summary.innerText = data.error ? data.error.message : response.statusText;
-            return
+
+    // If the current node was no heading and has previous siblings, add these
+    // siblings to the current chapter as well, until a heading is found
+    while (!headerFound && previousSibling) {
+        console.log("Adding previous sibling", previousSibling, " to current chapter");
+        previousSibling.classList.add('in-current-chapter');
+        nodesInChapterNow.add(previousSibling);
+        if (previousSibling.querySelector('h1, h2, h3, h4, h5, h6')) {
+            console.log("Found header in ", previousSibling);    
+            headerFound = true;
         }
-        const data = (await response.json()) as APODResponse
-        if (data.media_type === 'image') {
-            this.img.src = data.url
-            this.img.title = data.title
-            this.summary.innerText = data.title
-            if (data.copyright) { this.summary.innerText += ` (Copyright ${data.copyright})` }
-        } else {
-            this.summary.innerText = 'Random APOD fetched was not an image.'
-        }
+        previousSibling = previousSibling.previousElementSibling as HTMLElement | null;
+        console.log("Sibling node: ", previousSibling);
     }
 
-    randomDate(): string {
-        const start = new Date(2010, 1, 1)
-        const end = new Date()
-        const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
-        return randomDate.toISOString().slice(0, 10)
+    // Check if the current chapter has changed and if yes, remove nodes from
+    // the old chapter. Do this only if we have sibling headings, otherwise
+    // we are at the top of document OR the function was triggered by a cell
+    // creation and in this case we dont won't to remove the previous cells.
+    if (previousSibling) {
+        const difference = new Set([...nodesInChapterOld].filter(x => !nodesInChapterNow.has(x)));
+        difference.forEach((element) => {
+            console.log("Removing ", element, " from current chapter");
+            element.classList.remove('in-current-chapter');
+        });
     }
+
 }
 
 function activate(
     app: JupyterFrontEnd,
     palette: ICommandPalette,
-    restorer: ILayoutRestorer | null
+    notebookTracker: INotebookTracker
 ) {
-    console.log('JupyterLab extension toscmode is activated!')
-
-    // Random Astronomy Picture
-    let widget: MainAreaWidget<APODWidget>
-    const command: string = 'apod:open'
-    app.commands.addCommand(command, {
-        label: 'Random Astronomy Picture',
-        execute: () => {
-            if (!widget || widget.isDisposed) {
-                const content = new APODWidget()
-                widget = new MainAreaWidget({ content })
-                widget.id = 'apod-jupyterlab'
-                widget.title.label = 'Astronomy Picture'
-                widget.title.closable = true
-            }
-            if (!tracker.has(widget)) { tracker.add(widget) } // Track the state of the widget for later restoration
-            if (!widget.isAttached) { app.shell.add(widget, 'main') } // Attach the widget to the main work area if it's not there
-            widget.content.updateAPODImage() // Activate the widget
-            app.shell.activateById(widget.id)
-        }
-    })
-    palette.addItem({ command, category: 'Tutorial' }) // Add the command to the palette.
-    let tracker = new WidgetTracker<MainAreaWidget<APODWidget>>({ namespace: 'apod' }) // Track and restore the widget state
-    if (restorer) { restorer.restore(tracker, { command, name: () => 'apod'}) }
-
-    // Tobias Showcase Mode (Toscmode)
-    const showcaseCommand: string = 'showcase:toggle'
+    console.log('JupyterLab extension toscmode is activated!');
+    const showcaseCommand: string = 'showcase:toggle';
     app.commands.addCommand(showcaseCommand, {
         label: 'Toggle Showcase Mode',
         execute: () => {
-            document.body.classList.toggle('showcase-mode')
+            showcaseModeEnabled = !showcaseModeEnabled;
+            document.body.classList.toggle('showcase-mode');
+            if (showcaseModeEnabled) {
+                cellChangeTracker = notebookTracker.activeCellChanged;
+                cellChangeTracker.connect(hideCellsOutsideCurrentChapter);
+            } else {
+                if (cellChangeTracker) {
+                    cellChangeTracker.disconnect(hideCellsOutsideCurrentChapter);
+                    cellChangeTracker = null;
+                }
+            }
         }
-    })
-    palette.addItem({ command: showcaseCommand, category: 'View' }) // Add the command to the palette.
-
+    });
+    palette.addItem({ command: showcaseCommand, category: 'View' });
 }
 
 const plugin: JupyterFrontEndPlugin<void> = {
     id: 'toscmode',
     description: 'Adds a Showcase Mode to Jupyter Lab',
     autoStart: true,
-    requires: [ICommandPalette],
-    optional: [ILayoutRestorer],
+    requires: [ICommandPalette, INotebookTracker],
     activate: activate,
-}
+};
 
-export default plugin
+export default plugin;

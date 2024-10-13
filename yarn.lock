@@ -7205,6 +7205,8 @@ __metadata:
     "@jupyterlab/application": "npm:^4.2.5"
     "@jupyterlab/apputils": "npm:^4.3.5"
     "@jupyterlab/builder": "npm:^4.0.0"
+    "@jupyterlab/cells": "npm:^4.2.5"
+    "@jupyterlab/notebook": "npm:^4.2.5"
     "@jupyterlab/settingregistry": "npm:^4.0.0"
     "@jupyterlab/testutils": "npm:^4.0.0"
     "@lumino/widgets": "npm:^2.5.0"

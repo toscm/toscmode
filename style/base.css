@@ -1,15 +1,7 @@
 /*
-    See the JupyterLab Developer Guide for useful CSS Patterns:
-
-    https://jupyterlab.readthedocs.io/en/stable/developer/css.html
+See the JupyterLab Developer Guide for useful CSS Patterns:
+https://jupyterlab.readthedocs.io/en/stable/developer/css.html
 */
-
-.my-apodWidget {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: auto;
-}
 
 body.showcase-mode #jp-menu-panel,
 body.showcase-mode #jp-top-panel,
@@ -23,14 +15,22 @@ body.showcase-mode #jp-main-content-panel,
 body.showcase-mode #jp-main-vsplit-panel,
 body.showcase-mode #jp-main-split-panel,
 body.showcase-mode #jp-left-stack,
-body.showcase-mode #jp-left-stack > div,
+body.showcase-mode #jp-left-stack>div,
 body.showcase-mode #jp-main-dock-panel,
-body.showcase-mode #jp-main-dock-panel > div.jp-MainAreaWidget,
-body.showcase-mode #jp-main-dock-panel > div.jp-MainAreaWidget > div.jp-WindowedPanel,
-body.showcase-mode #jp-main-dock-panel > div.jp-MainAreaWidget > div.jp-WindowedPanel-scrollbar,
-body.showcase-mode #jp-main-dock-panel > div.jp-MainAreaWidget > div.jp-WindowedPanel-outer,
+body.showcase-mode #jp-main-dock-panel>div.jp-MainAreaWidget,
+body.showcase-mode #jp-main-dock-panel>div.jp-MainAreaWidget>div.jp-WindowedPanel,
+body.showcase-mode #jp-main-dock-panel>div.jp-MainAreaWidget>div.jp-WindowedPanel-scrollbar,
+body.showcase-mode #jp-main-dock-panel>div.jp-MainAreaWidget>div.jp-WindowedPanel-outer,
 body.showcase-mode #jp-right-stack,
-body.showcase-mode #jp-right-stack > div {
+body.showcase-mode #jp-right-stack>div {
     top: 0px !important;
     height: 100vh !important;
+    /* padding-top: 40px; */
+}
+
+body.showcase-mode div.jp-Cell:not(.jp-mod-selected):not(.jp-mod-active):not(.in-current-chapter) {
+     /* display: none; */
+     opacity: 0.10;
+     background-color: #f0f0f0;
+     color: #a0a0a0;
 }
