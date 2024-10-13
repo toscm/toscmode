@@ -1,0 +1,8 @@
+{
+  "jupyter.lab.shortcuts": [],
+  "title": "jupyterlab_toscmode",
+  "description": "jupyterlab_toscmode settings.",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}
