@@ -3,23 +3,23 @@
 [![Github Actions Status](https://github.com/toscm/toscmode/actions/workflows/build.yml/badge.svg)](https://github.com/toscm/toscmode/actions/workflows/build.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/toscm/toscmode/main?urlpath=lab)
 
-jupyterlab_toscmode is a JupyterLab extension providing an additional command *Enable toscmode* that allows to switch between the normal mode and a very lightweight showcase mode developed for the lectures of Tobias Schmidt.
+jupyterlab*toscmode is a JupyterLab extension providing an additional command \_Enable toscmode* that allows to switch between the normal mode and a very lightweight showcase mode developed for the lectures of Tobias Schmidt.
 
 In Toscmode, the following elements are hidden:
 
-- The menu panel (at the top of the screen)
-- The notebook panel (at the top of the notebook)
-- The cell toolbar (inside the currently selected cell)
-- Cells below the currently selected cell
+-   The menu panel (at the top of the screen)
+-   The notebook panel (at the top of the notebook)
+-   The cell toolbar (inside the currently selected cell)
+-   Cells below the currently selected cell
 
 The following elements are added:
 
-- A button to switch back to the normal mode (at the top left of the screen)
-- Buttons to navigate between cells (at the bottom right of the screen)
+-   A button to switch back to the normal mode (at the top left of the screen)
+-   Buttons to navigate between cells (at the bottom right of the screen)
 
 ## Requirements
 
-- JupyterLab >= 4.0.0
+-   JupyterLab >= 4.0.0
 
 ## Install
 

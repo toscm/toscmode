@@ -3,7 +3,7 @@
  */
 
 describe('jupyterlab_toscmode', () => {
-  it('should be tested', () => {
-    expect(1 + 1).toEqual(2);
-  });
-});
+    it('should be tested', () => {
+        expect(1 + 1).toEqual(2)
+    })
+})

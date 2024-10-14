@@ -64,10 +64,10 @@ follow the instructions of the Jupyter Releaser [checklist](https://jupyter-rele
 
 Here is a summary of the steps to cut a new release:
 
-- Go to the Actions panel
-- Run the "Step 1: Prep Release" workflow
-- Check the draft changelog
-- Run the "Step 2: Publish Release" workflow
+-   Go to the Actions panel
+-   Run the "Step 1: Prep Release" workflow
+-   Check the draft changelog
+-   Run the "Step 2: Publish Release" workflow
 
 > [!NOTE]
 > Check out the [workflow documentation](https://jupyter-releaser.readthedocs.io/en/latest/get_started/making_release_from_repo.html)

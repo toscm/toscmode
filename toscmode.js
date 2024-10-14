@@ -23,14 +23,23 @@ Implementation Details:
 function enablePresentationMode() {
     // Clean up any previous instances
     if (window.presentationModeListenerAdded) {
-        document.removeEventListener('keydown', window.presentationModeToggleListener);
-        if (window.presentationModeObserver) { window.presentationModeObserver.disconnect(); }
-        const existingStyleElement = document.getElementById('presentationModeStyles');
-        if (existingStyleElement) { document.head.removeChild(existingStyleElement); }
+        document.removeEventListener(
+            'keydown',
+            window.presentationModeToggleListener
+        )
+        if (window.presentationModeObserver) {
+            window.presentationModeObserver.disconnect()
+        }
+        const existingStyleElement = document.getElementById(
+            'presentationModeStyles'
+        )
+        if (existingStyleElement) {
+            document.head.removeChild(existingStyleElement)
+        }
     }
-    let isPresentationMode = false;
-    let cellObserver = null;
-    let styleElement = null;
+    let isPresentationMode = false
+    let cellObserver = null
+    let styleElement = null
     const presentationModeCSS = `
         #jp-menu-panel,
         #jp-top-panel,
@@ -56,111 +65,143 @@ function enablePresentationMode() {
         {
             top: 0px !important;
             height: 100vh !important;
-        }`;
+        }`
 
     function showCurrentCell(cell) {
-        console.log("Showing", cell);
-        cell.style.display = '';
+        console.log('Showing', cell)
+        cell.style.display = ''
     }
 
     function hideCellsFromPreviousChapter(cell) {
-        let currentCell = cell;
-        let previousChapterReached = cell.querySelector('h1, h2, h3, h4, h5, h6') ? true : false;
-        console.log("hideCellsFromPreviousChapter");
-        console.log("currentCell:", currentCell);
-        console.log("currentCell.previousElementSibling:", currentCell.previousElementSibling);
+        let currentCell = cell
+        let previousChapterReached = cell.querySelector(
+            'h1, h2, h3, h4, h5, h6'
+        )
+            ? true
+            : false
+        console.log('hideCellsFromPreviousChapter')
+        console.log('currentCell:', currentCell)
+        console.log(
+            'currentCell.previousElementSibling:',
+            currentCell.previousElementSibling
+        )
         while (currentCell.previousElementSibling) {
-            currentCell = currentCell.previousElementSibling;
+            currentCell = currentCell.previousElementSibling
             if (previousChapterReached) {
-                currentCell.style.display = 'none';
+                currentCell.style.display = 'none'
             } else if (currentCell.querySelector('h1, h2, h3, h4, h5, h6')) {
-                currentCell.style.display = '';
-                previousChapterReached = true;
+                currentCell.style.display = ''
+                previousChapterReached = true
             } else {
-                currentCell.style.display = '';
+                currentCell.style.display = ''
             }
         }
     }
 
     function hideFollowingCells(cell) {
-        let currentCell = cell;
-        let nextHeadingReched = false;
-        console.log("hideFollowingCells");
-        console.log("currentCell:", currentCell);
-        console.log("currentCell.nextElementSibling:", currentCell.nextElementSibling);
+        let currentCell = cell
+        let nextHeadingReched = false
+        console.log('hideFollowingCells')
+        console.log('currentCell:', currentCell)
+        console.log(
+            'currentCell.nextElementSibling:',
+            currentCell.nextElementSibling
+        )
         while (currentCell.nextElementSibling) {
-            currentCell = currentCell.nextElementSibling;
-            currentCell.style.display = 'none';
+            currentCell = currentCell.nextElementSibling
+            currentCell.style.display = 'none'
         }
     }
 
     function activatePresentationMode() {
         // Hide all cells except the currently selected cell
-        const cells = document.querySelectorAll('div.jp-Cell');
-        cells.forEach(cell => cell.style.display = cell.classList.contains('jp-mod-selected') ? '' : 'none');
+        const cells = document.querySelectorAll('div.jp-Cell')
+        cells.forEach(
+            (cell) =>
+                (cell.style.display = cell.classList.contains('jp-mod-selected')
+                    ? ''
+                    : 'none')
+        )
 
         // Observe changes to the class attribute of each cell
-        cellObserver = new MutationObserver(mutations => {
-            mutations.forEach(mutation => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        cellObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (
+                    mutation.type === 'attributes' &&
+                    mutation.attributeName === 'class'
+                ) {
                     if (mutation.target.classList.contains('jp-mod-selected')) {
-                        showCurrentCell(mutation.target);
-                        hideCellsFromPreviousChapter(mutation.target);
-                        hideFollowingCells(mutation.target);
+                        showCurrentCell(mutation.target)
+                        hideCellsFromPreviousChapter(mutation.target)
+                        hideFollowingCells(mutation.target)
                     }
                 }
-            });
-        });
+            })
+        })
 
         // Attach the observer to each cell
-        cells.forEach(cell => cellObserver.observe(cell, { attributes: true }));
+        cells.forEach((cell) =>
+            cellObserver.observe(cell, { attributes: true })
+        )
 
         // Inject CSS styles to hide certain UI elements
-        styleElement = document.createElement('style');
-        styleElement.id = 'presentationModeStyles';
-        styleElement.innerHTML = presentationModeCSS;
-        document.head.appendChild(styleElement);
-        isPresentationMode = true;
-        console.log("Presentation mode enabled.");
+        styleElement = document.createElement('style')
+        styleElement.id = 'presentationModeStyles'
+        styleElement.innerHTML = presentationModeCSS
+        document.head.appendChild(styleElement)
+        isPresentationMode = true
+        console.log('Presentation mode enabled.')
     }
 
     // Function to disable presentation mode
     function deactivatePresentationMode() {
         // Show all cells
-        document.querySelectorAll('div.jp-Cell').forEach(cell => cell.style.display = '');
+        document
+            .querySelectorAll('div.jp-Cell')
+            .forEach((cell) => (cell.style.display = ''))
 
         // Disconnect the cell observer
-        if (cellObserver) cellObserver.disconnect();
-        cellObserver = null;
+        if (cellObserver) cellObserver.disconnect()
+        cellObserver = null
 
         // Remove injected CSS styles using the style tag's ID
-        const existingStyleElement = document.getElementById('presentationModeStyles');
+        const existingStyleElement = document.getElementById(
+            'presentationModeStyles'
+        )
         if (existingStyleElement) {
-            document.head.removeChild(existingStyleElement);
+            document.head.removeChild(existingStyleElement)
         }
-        isPresentationMode = false;
-        console.log("Presentation mode disabled.");
+        isPresentationMode = false
+        console.log('Presentation mode disabled.')
     }
 
     // Function to toggle presentation mode
     function togglePresentationMode() {
-        isPresentationMode ? deactivatePresentationMode() : activatePresentationMode();
+        isPresentationMode
+            ? deactivatePresentationMode()
+            : activatePresentationMode()
     }
 
     // Add event listener for toggling presentation mode
-    const presentationModeToggleListener = event => {
-        if ((event.ctrlKey && event.shiftKey && event.altKey && event.key === 'M') || event.key === 'F8') {
-            togglePresentationMode();
+    const presentationModeToggleListener = (event) => {
+        if (
+            (event.ctrlKey &&
+                event.shiftKey &&
+                event.altKey &&
+                event.key === 'M') ||
+            event.key === 'F8'
+        ) {
+            togglePresentationMode()
         }
-    };
-    document.addEventListener('keydown', presentationModeToggleListener);
+    }
+    document.addEventListener('keydown', presentationModeToggleListener)
 
     // Store references to the observer and listener for cleanup
-    window.presentationModeObserver = cellObserver;
-    window.presentationModeToggleListener = presentationModeToggleListener;
-    window.presentationModeListenerAdded = true;
+    window.presentationModeObserver = cellObserver
+    window.presentationModeToggleListener = presentationModeToggleListener
+    window.presentationModeListenerAdded = true
 
-    console.log("Keybindings for presentation mode set: F8 or Ctrl+Shift+Alt+M");
-};
+    console.log('Keybindings for presentation mode set: F8 or Ctrl+Shift+Alt+M')
+}
 
-enablePresentationMode();
+enablePresentationMode()

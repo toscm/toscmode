@@ -1,28 +1,28 @@
 {
-  "title": "jupyterlab_toscmode",
-  "description": "jupyterlab_toscmode settings.",
-  "type": "object",
-  "jupyter.lab.shortcuts": [],
-  "jupyter.lab.menus": {
-    "main": [
-      {
-        "id": "jp-mainmenu-view",
-        "items": [
-          {
-            "command": "jupyterlab_toscmode:toggle-showcase-mode",
-            "rank": 0
-          }
+    "title": "jupyterlab_toscmode",
+    "description": "jupyterlab_toscmode settings.",
+    "type": "object",
+    "jupyter.lab.shortcuts": [],
+    "jupyter.lab.menus": {
+        "main": [
+            {
+                "id": "jp-mainmenu-view",
+                "items": [
+                    {
+                        "command": "jupyterlab_toscmode:toggle-showcase-mode",
+                        "rank": 0
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  },
-  "properties": {
-    "greyOut": {
-      "type": "boolean",
-      "title": "Grey out cells outside of current chapter",
-      "description": "Whether cells outside of the current chapter should be greyed out.",
-      "default": false
-    }
-  },
-  "additionalProperties": false
+    },
+    "properties": {
+        "greyOut": {
+            "type": "boolean",
+            "title": "Grey out cells outside of current chapter",
+            "description": "Whether cells outside of the current chapter should be greyed out.",
+            "default": false
+        }
+    },
+    "additionalProperties": false
 }
