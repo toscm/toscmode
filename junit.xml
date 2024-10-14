@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="1" failures="0" errors="0" time="7.008">
+  <testsuite name="jupyterlab_toscmode" errors="0" failures="0" skipped="0" timestamp="2024-10-14T15:02:32" time="5.591" tests="1">
+    <testcase classname="jupyterlab_toscmode should be tested" name="jupyterlab_toscmode should be tested" time="0.005">
+    </testcase>
+  </testsuite>
+</testsuites>
