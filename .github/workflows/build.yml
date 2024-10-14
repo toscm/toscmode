@@ -18,6 +18,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Install Yarn
+      run: npm install -g yarn
+
     - name: Base Setup
       uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
 
