@@ -1,6 +1,6 @@
 {
     "name": "jupyterlab_toscmode",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Adds a Showcase Mode to Jupyter Lab",
     "keywords": [
         "jupyter",
