@@ -28,7 +28,7 @@ body.showcase-mode #jp-right-stack>div {
     /* padding-top: 40px; */
 }
 
-body.showcase-mode div.jp-Cell:not(.jp-mod-selected):not(.jp-mod-active):not(.in-current-chapter) {
+body.showcase-mode.grey-out div.jp-Cell:not(.jp-mod-selected):not(.jp-mod-active):not(.in-current-chapter) {
      /* display: none; */
      opacity: 0.10;
      background-color: #f0f0f0;

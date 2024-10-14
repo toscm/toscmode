@@ -61,7 +61,7 @@
         "@jupyterlab/apputils": "^4.3.5",
         "@jupyterlab/cells": "^4.2.5",
         "@jupyterlab/notebook": "^4.2.5",
-        "@jupyterlab/settingregistry": "^4.0.0",
+        "@jupyterlab/settingregistry": "^4.2.5",
         "@lumino/widgets": "^2.5.0",
         "react": "^18.3.1",
         "webpack": "^5.95.0"

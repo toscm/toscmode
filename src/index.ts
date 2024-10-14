@@ -2,9 +2,64 @@ import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application'
 import { ICommandPalette } from '@jupyterlab/apputils';
 import { INotebookTracker } from '@jupyterlab/notebook';
 import { Cell, ICellModel } from '@jupyterlab/cells';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
+
+const PLUGIN_ID = 'jupyterlab_toscmode:plugin';
+const TOGGLE_SHOWCASE_MODE_ID = 'jupyterlab_toscmode:toggle-showcase-mode';
 
 let showcaseModeEnabled = false;
 let cellChangeTracker: any = null;
+let greyOut = false;
+
+const plugin: JupyterFrontEndPlugin<void> = {
+    id: 'toscmode',
+    description: 'Adds a Showcase Mode to Jupyter Lab',
+    autoStart: true,
+    requires: [ICommandPalette, INotebookTracker, ISettingRegistry],
+    activate: activate,
+};
+
+function activate(
+    app: JupyterFrontEnd,
+    palette: ICommandPalette,
+    notebookTracker: INotebookTracker,
+    settings: ISettingRegistry
+) {
+    console.log('JupyterLab extension toscmode is activated!');
+    Promise.all([app.restored, settings.load(PLUGIN_ID)]).then(([, setting]) => {
+        console.log("Reading settings")
+        loadSetting(setting); // Read initial settings
+        setting.changed.connect(loadSetting); // Listen for setting changes
+        app.commands.addCommand(TOGGLE_SHOWCASE_MODE_ID, {
+            label: 'Toggle Showcase Mode',
+            execute: () => {
+                showcaseModeEnabled = !showcaseModeEnabled;
+                document.body.classList.toggle('showcase-mode');
+                if (showcaseModeEnabled) {
+                    cellChangeTracker = notebookTracker.activeCellChanged;
+                    cellChangeTracker.connect(hideCellsOutsideCurrentChapter);
+                } else {
+                    if (cellChangeTracker) {
+                        cellChangeTracker.disconnect(hideCellsOutsideCurrentChapter);
+                        cellChangeTracker = null;
+                    }
+                }
+            }
+        });
+        palette.addItem({ command: TOGGLE_SHOWCASE_MODE_ID, category: 'View' });
+    }).catch(reason => { console.error(`Error: ${reason}`); });
+}
+
+function loadSetting(setting: ISettingRegistry.ISettings): void {
+    greyOut = setting.get('greyOut').composite as boolean;
+    if (greyOut) {
+        console.log("Grey out enabled");
+        document.body.classList.add('grey-out');
+    } else {
+        console.log("Grey out disabled");
+        document.body.classList.remove('grey-out');
+    }
+}
 
 function hideCellsOutsideCurrentChapter(tracker: INotebookTracker, cell: Cell<ICellModel> | null) {
     // Iterate over all siblings cells (incl. the current cell) upwards until a
@@ -47,7 +102,7 @@ function hideCellsOutsideCurrentChapter(tracker: INotebookTracker, cell: Cell<IC
         previousSibling.classList.add('in-current-chapter');
         nodesInChapterNow.add(previousSibling);
         if (previousSibling.querySelector('h1, h2, h3, h4, h5, h6')) {
-            console.log("Found header in ", previousSibling);    
+            console.log("Found header in ", previousSibling);
             headerFound = true;
         }
         previousSibling = previousSibling.previousElementSibling as HTMLElement | null;
@@ -67,39 +122,5 @@ function hideCellsOutsideCurrentChapter(tracker: INotebookTracker, cell: Cell<IC
     }
 
 }
-
-function activate(
-    app: JupyterFrontEnd,
-    palette: ICommandPalette,
-    notebookTracker: INotebookTracker
-) {
-    console.log('JupyterLab extension toscmode is activated!');
-    const showcaseCommand: string = 'showcase:toggle';
-    app.commands.addCommand(showcaseCommand, {
-        label: 'Toggle Showcase Mode',
-        execute: () => {
-            showcaseModeEnabled = !showcaseModeEnabled;
-            document.body.classList.toggle('showcase-mode');
-            if (showcaseModeEnabled) {
-                cellChangeTracker = notebookTracker.activeCellChanged;
-                cellChangeTracker.connect(hideCellsOutsideCurrentChapter);
-            } else {
-                if (cellChangeTracker) {
-                    cellChangeTracker.disconnect(hideCellsOutsideCurrentChapter);
-                    cellChangeTracker = null;
-                }
-            }
-        }
-    });
-    palette.addItem({ command: showcaseCommand, category: 'View' });
-}
-
-const plugin: JupyterFrontEndPlugin<void> = {
-    id: 'toscmode',
-    description: 'Adds a Showcase Mode to Jupyter Lab',
-    autoStart: true,
-    requires: [ICommandPalette, INotebookTracker],
-    activate: activate,
-};
 
 export default plugin;
