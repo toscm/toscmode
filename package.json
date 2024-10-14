@@ -192,6 +192,5 @@
             "selector-no-vendor-prefix": null,
             "value-no-vendor-prefix": null
         }
-    },
-    "packageManager": "yarn@4.5.0"
+    }
 }
