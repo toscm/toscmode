@@ -33,4 +33,4 @@ Or install it via the grafical extension manager as shown below:
 
 ## Contribute
 
-See [CONTRIBUTING.md] for details on how to contribute to this project.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
