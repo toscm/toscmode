@@ -1,10 +1,8 @@
-# Making a new release of jupyterlab_toscmode
+# Releasing
 
 The extension can be published to `PyPI` and `npm` manually or using the [Jupyter Releaser](https://github.com/jupyter-server/jupyter_releaser).
 
-## Manual release
-
-### Python package
+## Manual PyPI Release
 
 This extension can be distributed as Python packages. All of the Python
 packaging instructions are in the `pyproject.toml` file to wrap your extension in a
@@ -47,7 +45,7 @@ Then to upload the package to PyPI, do:
 twine upload dist/*
 ```
 
-### NPM package
+## Manual NPM Release
 
 To publish the frontend part of the extension as a NPM package, do:
 
@@ -56,7 +54,7 @@ npm login
 npm publish --access public
 ```
 
-## Automated releases with the Jupyter Releaser
+## Automated Release
 
 The extension repository should already be compatible with the Jupyter Releaser. But
 the GitHub repository and the package managers need to be properly set up. Please
@@ -73,7 +71,7 @@ Here is a summary of the steps to cut a new release:
 > Check out the [workflow documentation](https://jupyter-releaser.readthedocs.io/en/latest/get_started/making_release_from_repo.html)
 > for more information.
 
-## Publishing to `conda-forge`
+## Conda Release
 
 If the package is not on conda forge yet, check the documentation to learn how to add it: https://conda-forge.org/docs/maintainer/adding_pkgs.html
 
