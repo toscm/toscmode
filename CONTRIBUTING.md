@@ -5,14 +5,18 @@
 3. Within the repo, execute the following commands
 
 ```bash
-npm install # Install package dependencies
-npm run build # Rebuild extension OR
-npm run watch # Watch for changes and rebuild
-python -m build # Only required once
-pip install -e "." # Install package in dev mode
-jupyter labextension develop . --overwrite # Link to JupyterLab
+npm install # Install dependencies
+npm run build # Build extension
+pip install -e "." # Install python package in dev mode
+jupyter labextension develop . --overwrite # Create JupyterLab Links
 jupyter lab # Start JupyterLab (in another terminal)
-jupyter lab build --minimize=False # Optional: build JupyterLab source maps
+```
+
+For useful commands are:
+
+```bash
+npm run watch # Watch and rebuild on changes
+jupyter lab build --minimize=False # Build source maps for easier debugging
 ```
 
 # Development uninstall
