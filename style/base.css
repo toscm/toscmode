@@ -19,29 +19,16 @@ body.showcase-mode #jp-left-stack,
 body.showcase-mode #jp-left-stack > div,
 body.showcase-mode #jp-main-dock-panel,
 body.showcase-mode #jp-main-dock-panel > div.jp-MainAreaWidget,
-body.showcase-mode
-    #jp-main-dock-panel
-    > div.jp-MainAreaWidget
-    > div.jp-WindowedPanel,
-body.showcase-mode
-    #jp-main-dock-panel
-    > div.jp-MainAreaWidget
-    > div.jp-WindowedPanel-scrollbar,
-body.showcase-mode
-    #jp-main-dock-panel
-    > div.jp-MainAreaWidget
-    > div.jp-WindowedPanel-outer,
+body.showcase-mode #jp-main-dock-panel > div.jp-MainAreaWidget > div.jp-WindowedPanel,
+body.showcase-mode #jp-main-dock-panel > div.jp-MainAreaWidget > div.jp-WindowedPanel-scrollbar,
+body.showcase-mode #jp-main-dock-panel > div.jp-MainAreaWidget > div.jp-WindowedPanel-outer,
 body.showcase-mode #jp-right-stack,
 body.showcase-mode #jp-right-stack > div {
     top: 0 !important;
     height: 100vh !important;
-
-    /* padding-top: 40px; */
 }
 
-body.showcase-mode.grey-out
-    div.jp-Cell:not(.jp-mod-selected, .jp-mod-active, .in-current-chapter) {
-    /* display: none; */
+body.showcase-mode.grey-out div.jp-Cell:not(.jp-mod-selected, .jp-mod-active, .in-current-chapter) {
     opacity: 0.1;
     background-color: #f0f0f0;
     color: #a0a0a0;

@@ -11,7 +11,7 @@ JupyterLab v4.x extension providing command *Enable Showcase Mode* that allows t
 -   The cell toolbar (inside the currently selected cell)
 -   Optional: cells not part of the currently selected chapter (requires option `Grey out cells outside of current chapter` to be set to true)
 
-## Install
+## Installation
 
 Execute the following command in a shell:
 
@@ -21,17 +21,28 @@ pip install jupyterlab_toscmode
 
 Or install it via the grafical extension manager as shown below:
 
-![GUI-Installation](doc/img/gui_install_annotated.png)
+![GUI-Installation](img/gui_install_annotated.png)
 
 ## Usage
 
 1. Enter `Ctrl+Shift+D` to switch to the "Simple Interface", i.e. no tabs are shown.
-
 2. Enter `Ctrl+Shift+C` to open the Command Panel and run command "Toggle Showcase Mode".
-
 3. To switch back to normal mode, repeat.
 
-### Setting custom Jupyter shortcuts for smooth usage
+<img src="img/tab_mode.png" alt="Normal-Mode" style="width: 49%;" />
+<img src="img/sc_mode.png" alt="Showcase-Mode" style="width: 49%;" />
+
+## Configuration
+
+### Enable cell grey out
+
+1. In Jupyter, go to Settings tab -> Settings editor
+2. Enter `toscmode` in the search bar
+3. Enable/diable setting `Grey out cells outside of current chapter`
+
+![Cell-Grey-Out](img/grey_out_setting.png)
+
+### Set custom Shortcuts
 
 1. In Jupyter, go to Settings tab -> Settings editor
 2. Choose `Keyboard Shortcuts` from the left sidebar
