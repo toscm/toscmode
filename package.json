@@ -104,7 +104,6 @@
         "outputDir": "jupyterlab_toscmode/labextension",
         "schemaDir": "schema"
     },
-    "packageManager": "yarn@3.5.0",
     "typescript": {
         "compilerOptions": {
             "allowSyntheticDefaultImports": true,
