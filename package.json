@@ -1,6 +1,6 @@
 {
     "name": "jupyterlab_toscmode",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Adds a Showcase Mode to Jupyter Lab",
     "keywords": [
         "jupyter",
@@ -30,28 +30,18 @@
         "url": "https://github.com/toscm/toscmode.git"
     },
     "scripts": {
-        "build": "jlpm build:lib && jlpm build:labextension:dev",
-        "build:prod": "jlpm clean && jlpm build:lib:prod && jlpm build:labextension",
+        "build": "npm run build:lib && npm run build:labextension:dev",
+        "build:prod": "npm run clean && npm run build:lib:prod && npm run build:labextension",
         "build:labextension": "jupyter labextension build .",
         "build:labextension:dev": "jupyter labextension build --development True .",
         "build:lib": "tsc --sourceMap",
         "build:lib:prod": "tsc",
-        "clean": "jlpm clean:lib",
+        "clean": "npm run clean:lib",
         "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
         "clean:lintcache": "rimraf .eslintcache .stylelintcache",
         "clean:labextension": "rimraf jupyterlab_toscmode/labextension jupyterlab_toscmode/_version.py",
-        "clean:all": "jlpm clean:lib && jlpm clean:labextension && jlpm clean:lintcache",
-        "eslint": "jlpm eslint:check --fix",
-        "eslint:check": "eslint . --cache --ext .ts,.tsx",
-        "install:extension": "jlpm build",
-        "lint": "jlpm stylelint && jlpm prettier && jlpm eslint",
-        "lint:check": "jlpm stylelint:check && jlpm prettier:check && jlpm eslint:check",
-        "prettier": "jlpm prettier:base --write --list-different",
-        "prettier:base": "prettier \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
-        "prettier:check": "jlpm prettier:base --check",
-        "stylelint": "jlpm stylelint:check --fix",
-        "stylelint:check": "stylelint --cache \"style/**/*.css\"",
-        "test": "jest --coverage",
+        "clean:all": "npm run clean:lib && npm run clean:labextension && npm run clean:lintcache",
+        "install:extension": "npm run build",
         "watch": "run-p watch:src watch:labextension",
         "watch:src": "tsc -w --sourceMap",
         "watch:labextension": "jupyter labextension watch ."
@@ -114,90 +104,27 @@
         "outputDir": "jupyterlab_toscmode/labextension",
         "schemaDir": "schema"
     },
-    "eslintIgnore": [
-        "node_modules",
-        "dist",
-        "coverage",
-        "**/*.d.ts",
-        "tests",
-        "**/__tests__",
-        "ui-tests"
-    ],
-    "eslintConfig": {
-        "extends": [
-            "eslint:recommended",
-            "plugin:@typescript-eslint/eslint-recommended",
-            "plugin:@typescript-eslint/recommended",
-            "plugin:prettier/recommended"
-        ],
-        "parser": "@typescript-eslint/parser",
-        "parserOptions": {
-            "project": "tsconfig.json",
-            "sourceType": "module"
-        },
-        "plugins": [
-            "@typescript-eslint"
-        ],
-        "rules": {
-            "@typescript-eslint/naming-convention": [
-                "error",
-                {
-                    "selector": "interface",
-                    "format": [
-                        "PascalCase"
-                    ],
-                    "custom": {
-                        "regex": "^I[A-Z]",
-                        "match": true
-                    }
-                }
-            ],
-            "@typescript-eslint/no-unused-vars": [
-                "warn",
-                {
-                    "args": "none"
-                }
-            ],
-            "@typescript-eslint/no-explicit-any": "off",
-            "@typescript-eslint/no-namespace": "off",
-            "@typescript-eslint/no-use-before-define": "off",
-            "@typescript-eslint/quotes": [
-                "error",
-                "single",
-                {
-                    "avoidEscape": true,
-                    "allowTemplateLiterals": false
-                }
-            ],
-            "curly": [
-                "error",
-                "all"
-            ],
-            "eqeqeq": "error",
-            "prefer-arrow-callback": "error"
-        }
-    },
-    "prettier": {
-        "trailingComma": "es5",
-        "tabWidth": 4,
-        "semi": false,
-        "singleQuote": true
-    },
-    "stylelint": {
-        "extends": [
-            "stylelint-config-recommended",
-            "stylelint-config-standard",
-            "stylelint-prettier/recommended"
-        ],
-        "plugins": [
-            "stylelint-csstree-validator"
-        ],
-        "rules": {
-            "csstree/validator": true,
-            "property-no-vendor-prefix": null,
-            "selector-class-pattern": "^([a-z][A-z\\d]*)(-[A-z\\d]+)*$",
-            "selector-no-vendor-prefix": null,
-            "value-no-vendor-prefix": null
+    "packageManager": "yarn@3.5.0",
+    "typescript": {
+        "compilerOptions": {
+            "allowSyntheticDefaultImports": true,
+            "composite": true,
+            "declaration": true,
+            "esModuleInterop": true,
+            "incremental": true,
+            "jsx": "react",
+            "module": "esnext",
+            "moduleResolution": "node",
+            "noEmitOnError": true,
+            "noImplicitAny": true,
+            "noUnusedLocals": true,
+            "preserveWatchOutput": true,
+            "resolveJsonModule": true,
+            "outDir": "lib",
+            "rootDir": "src",
+            "strict": true,
+            "strictNullChecks": true,
+            "target": "ES2018"
         }
     }
 }

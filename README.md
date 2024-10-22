@@ -21,14 +21,12 @@ pip install jupyterlab_toscmode
 
 Or install it via the grafical extension manager as shown below:
 
-![GUI-Installation](doc/img/gui_install_annotated.png)
+![GUI-Installation](img/gui_install_annotated.png)
 
 ## Usage
 
 1. Enter `Ctrl+Shift+D` to switch to the "Simple Interface", i.e. no tabs are shown.
-
 2. Enter `Ctrl+Shift+C` to open the Command Panel and run command "Toggle Showcase Mode".
-
 3. To switch back to normal mode, repeat.
 
 ## Contribute

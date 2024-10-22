@@ -22,8 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = [
-]
+dependencies = []
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
 [tool.hatch.version]
@@ -54,11 +53,11 @@ skip-if-exists = ["jupyterlab_toscmode/labextension/static/style.js"]
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 build_cmd = "build:prod"
-npm = ["jlpm"]
+npm = ["npm"]
 
 [tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
 build_cmd = "install:extension"
-npm = ["jlpm"]
+npm = ["npm"]
 source_dir = "src"
 build_dir = "jupyterlab_toscmode/labextension"
 
@@ -68,10 +67,10 @@ version_cmd = "hatch version"
 [tool.jupyter-releaser.hooks]
 before-build-npm = [
     "python -m pip install 'jupyterlab>=4.0.0,<5'",
-    "jlpm",
-    "jlpm build:prod"
+    "npm",
+    "npm build:prod"
 ]
-before-build-python = ["jlpm clean:all"]
+before-build-python = ["npm clean:all"]
 
 [tool.check-wheel-contents]
 ignore = ["W002"]
