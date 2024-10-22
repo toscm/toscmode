@@ -29,8 +29,8 @@ Or install it via the grafical extension manager as shown below:
 2. Enter `Ctrl+Shift+C` to open the Command Panel and run command "Toggle Showcase Mode".
 3. To switch back to normal mode, repeat.
 
-<img src="img/tab_mode.png" alt="Normal-Mode" style="width: 49%;" />
-<img src="img/sc_mode.png" alt="Showcase-Mode" style="width: 49%;" />
+<img src="img/tab_mode.png" alt="Normal-Mode" style="width: 45%;" />
+<img src="img/sc_mode.png" alt="Showcase-Mode" style="width: 45%;" />
 
 ## Configuration
 
