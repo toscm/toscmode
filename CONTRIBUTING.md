@@ -12,7 +12,7 @@ jupyter labextension develop . --overwrite # Create JupyterLab Links
 jupyter lab # Start JupyterLab (in another terminal)
 ```
 
-For useful commands are:
+Further useful commands are:
 
 ```bash
 npm run watch # Watch and rebuild on changes

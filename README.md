@@ -4,7 +4,7 @@
 
 # jupyterlab_toscmode
 
-JupyterLab v4.x extension providing command *Enable Showcase Mode* that allows to switch between normal mode and showcase mode. In Showcase Mode, the following elements are hidden:
+JupyterLab v4 extension providing command *Toggle Showcase Mode* that allows to switch between normal mode and showcase mode. In Showcase Mode, the following elements are hidden:
 
 -   The menu panel (at the top of the screen)
 -   The notebook panel (at the top of the notebook)
@@ -61,32 +61,24 @@ Or install it via the grafical extension manager as shown below:
         {
             "args": {},
             "command": "application:toggle-left-area",
-            "keys": [
-                "Ctrl Shift 1"
-            ],
+            "keys": ["Ctrl Shift 1"],
             "selector": "body"
         },
         {
             "args": {},
             "command": "application:toggle-mode",
-            "keys": [
-                "Ctrl Shift 2"
-            ],
+            "keys": ["Ctrl Shift 2"],
             "selector": "body"
         },
         {
             "args": {},
             "command": "jupyterlab_toscmode:toggle-showcase-mode",
-            "keys": [
-                "Ctrl Shift 3"
-            ],
+            "keys": ["Ctrl Shift 3"],
             "selector": "body"
         }
     ]
-    
 }
 ```
-
 
 ## Contribute
 
