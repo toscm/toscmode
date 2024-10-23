@@ -15,7 +15,7 @@ jupyter lab # Start JupyterLab (in another terminal)
 Further useful commands are:
 
 ```bash
-npm run watch # Watch and rebuild on changes
+npm run watch # Watch and rebuild on change
 jupyter lab build --minimize=False # Build source maps for easier debugging
 ```
 
